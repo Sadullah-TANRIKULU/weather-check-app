@@ -20,14 +20,28 @@ function App() {
     }
     getWeather();
   }, [search]);
+  const cityTemp = (city.main.temp).toFixed(1);
+
+  const handleKeyDown = (e) => {
+    e.keyCode === 13 && setSearch(e.target.value);
+  }
 
   return (
-    <div className="container">
-      <input type="text" onKeyDown={(e) => setSearch(e.target.value)} />
+    <div className="flex flex-col items-center h-screen bg-gray-200 ">
+      <div className='flex flex-col items-center bg-amber-100 p-4 rounded-lg '  >
+        <label className='font-semibold' >Set down a City Name and Press Enter <br /> to check Weather Stats </label>
+        <input className='bg-red-200 ' type="text" onKeyDown={handleKeyDown} />
+        {/* <button className='w-20 rounded-md bg-amber-400 mt-2' onSubmit={handleSubmit}  >Submit</button> */}
+      </div>
       <br />
-      {city && <h1>{city.main.temp} °C </h1>}
-      {city && <h1>{city.name}</h1>}
-      {city && <h1>{city.weather[0].main}</h1>}
+      {city && <h1 className='text-2xl' >{cityTemp} °C </h1>}
+      {city && <h2 className='base' >{city.name}</h2>}
+      {city && <h3 className='sm' > description: {city.weather[0].description}</h3>}
+      {city && <h3 className='sm' >   longitude: {city.coord.lon} °, latitude: {city.coord.lat} °</h3>}
+      {city && <h3 className='sm' >    humidity: {city.main.humidity} grams per cubic metre</h3>}
+      {city && <h3 className='sm' >    pressure: {city.main.pressure} pascals</h3>}
+      {city && <h3 className='sm' >  wind-speed: {city.wind.speed} km/h</h3>}
+
     </div>
   );
 }
